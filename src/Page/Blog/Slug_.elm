@@ -1,8 +1,11 @@
 module Page.Blog.Slug_ exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
+import DataSource.File as File
+import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
+import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, PageWithState, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
@@ -35,12 +38,41 @@ page =
 
 routes : DataSource (List RouteParams)
 routes =
-    DataSource.succeed [ { slug = "my-post" } ]
+    Glob.succeed RouteParams
+        |> Glob.match (Glob.literal "content/technical-blog/")
+        |> Glob.capture Glob.wildcard
+        |> Glob.match (Glob.literal ".md")
+        |> Glob.toDataSource
 
 
 data : RouteParams -> DataSource Data
 data routeParams =
-    DataSource.succeed ()
+    blogPost
+
+
+blogPost : DataSource BlogPostMetadata
+blogPost =
+    File.bodyWithFrontmatter blogPostDecoder
+        "content/technical-blog/hello-world.md"
+
+
+type alias BlogPostMetadata =
+    { body : String
+    , title : String
+    , tags : List String
+    }
+
+
+blogPostDecoder : String -> Decoder BlogPostMetadata
+blogPostDecoder body =
+    Decode.map2 (BlogPostMetadata body)
+        (Decode.field "title" Decode.string)
+        (Decode.field "tags" tagsDecoder)
+
+
+tagsDecoder : Decoder (List String)
+tagsDecoder =
+    Decode.list Decode.string
 
 
 head :
@@ -64,7 +96,7 @@ head static =
 
 
 type alias Data =
-    ()
+    BlogPostMetadata
 
 
 view :
@@ -73,4 +105,4 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    View.placeholder static.routeParams.slug
+    View.placeholder ("Title: " ++ static.data.title ++ " Tags: " ++ String.join " " static.data.tags ++ " content: " ++ static.data.body)
