@@ -1,4 +1,4 @@
-module Page.Blog exposing (Model, Msg, Data, page)
+module Page.Blog exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
 import Head
@@ -17,8 +17,10 @@ type alias Model =
 type alias Msg =
     Never
 
+
 type alias RouteParams =
     {}
+
 
 page : Page RouteParams Data
 page =
@@ -64,4 +66,8 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    View.placeholder "Blog"
+    View.placeholder
+        { title = "Blog"
+        , tags = List.singleton "tag"
+        , body = "body things"
+        }

@@ -10,6 +10,7 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
+import Types exposing (BlogPostMetadata)
 import View exposing (View)
 
 
@@ -91,17 +92,14 @@ type alias Data =
     BlogPostMetadata
 
 
-type alias BlogPostMetadata =
-    { body : String
-    , title : String
-    , tags : List String
-    }
-
-
 view :
     Maybe PageUrl
     -> Shared.Model
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    View.placeholder ("Title: " ++ static.data.title ++ " Tags: " ++ String.join " " static.data.tags ++ " content: " ++ static.data.body)
+    View.placeholder static.data
+
+
+
+-- ("Title: " ++ static.data.title ++ " Tags: " ++ String.join " " static.data.tags ++ " content: " ++ static.data.body)

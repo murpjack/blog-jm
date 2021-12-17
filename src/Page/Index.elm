@@ -66,4 +66,8 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    View.placeholder "Index"
+    View.placeholder
+        { title = "Index"
+        , tags = List.singleton "tag"
+        , body = "body things"
+        }

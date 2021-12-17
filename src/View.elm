@@ -1,6 +1,7 @@
 module View exposing (View, map, placeholder)
 
 import Html exposing (Html)
+import Types exposing (BlogPostMetadata)
 
 
 type alias View msg =
@@ -16,8 +17,16 @@ map fn doc =
     }
 
 
-placeholder : String -> View msg
-placeholder moduleName =
-    { title = "Placeholder - " ++ moduleName
-    , body = [ Html.text moduleName ]
+placeholder : BlogPostMetadata -> View msg
+placeholder blogPost =
+    { title = blogPost.title
+    , body =
+        [ Html.div []
+            [ Html.h2 [] [ Html.text blogPost.title ]
+            , Html.text (" Tags: " ++ String.join " " blogPost.tags)
+            ]
+        , Html.div []
+            [ Html.text blogPost.body
+            ]
+        ]
     }
