@@ -9,7 +9,6 @@ import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, PageWithState, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
-import Path exposing (toAbsolute)
 import Shared
 import View exposing (View)
 
@@ -47,13 +46,13 @@ routes =
 
 data : RouteParams -> DataSource Data
 data routeParams =
-    blogPost
+    blogPost routeParams.slug
 
 
-blogPost : DataSource BlogPostMetadata
-blogPost =
+blogPost : String -> DataSource BlogPostMetadata
+blogPost slug =
     File.bodyWithFrontmatter blogPostDecoder
-        "content/technical-blog/hello-world.md"
+        ("content/technical-blog/" ++ slug ++ ".md")
 
 
 type alias BlogPostMetadata =
