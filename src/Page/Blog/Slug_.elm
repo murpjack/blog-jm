@@ -6,7 +6,7 @@ import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
 import OptimizedDecoder as Decode exposing (Decoder)
-import Page exposing (Page, PageWithState, StaticPayload)
+import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
@@ -38,7 +38,7 @@ page =
 routes : DataSource (List RouteParams)
 routes =
     Glob.succeed RouteParams
-        |> Glob.match (Glob.literal "content/technical-blog/")
+        |> Glob.match (Glob.literal "content/technical/")
         |> Glob.capture Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
@@ -46,20 +46,13 @@ routes =
 
 data : RouteParams -> DataSource Data
 data routeParams =
-    blogPost routeParams.slug
+    blogPost routeParams
 
 
-blogPost : String -> DataSource BlogPostMetadata
-blogPost slug =
+blogPost : RouteParams -> DataSource BlogPostMetadata
+blogPost routeParams =
     File.bodyWithFrontmatter blogPostDecoder
-        ("content/technical-blog/" ++ slug ++ ".md")
-
-
-type alias BlogPostMetadata =
-    { body : String
-    , title : String
-    , tags : List String
-    }
+        ("content/technical/" ++ routeParams.slug ++ ".md")
 
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
@@ -80,7 +73,7 @@ head :
 head static =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "JM blog"
         , image =
             { url = Pages.Url.external "TODO"
             , alt = "elm-pages logo"
@@ -89,13 +82,20 @@ head static =
             }
         , description = "TODO"
         , locale = Nothing
-        , title = "TODO title" -- metadata.title -- TODO
+        , title = static.data.title ++ " | JM blog"
         }
         |> Seo.website
 
 
 type alias Data =
     BlogPostMetadata
+
+
+type alias BlogPostMetadata =
+    { body : String
+    , title : String
+    , tags : List String
+    }
 
 
 view :
