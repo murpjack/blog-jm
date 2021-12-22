@@ -1,9 +1,11 @@
 module Page.Blog exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
+import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
-import Page exposing (Page, PageWithState, StaticPayload)
+import Html exposing (Html)
+import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
@@ -32,12 +34,36 @@ page =
 
 
 type alias Data =
-    ()
+    List PostMeta
+
+
+type alias PostMeta =
+    { filePath : String
+    , slug : String
+    }
 
 
 data : DataSource Data
 data =
-    DataSource.succeed ()
+    blogPostsGlob
+
+
+
+-- DataSource.succeed ()
+
+
+blogPostsGlob : DataSource Data
+blogPostsGlob =
+    Glob.succeed
+        (\capture1 capture2 capture3 ->
+            { filePath = capture1 ++ capture2 ++ capture3
+            , slug = capture2
+            }
+        )
+        |> Glob.capture (Glob.literal "content/technical/")
+        |> Glob.capture Glob.wildcard
+        |> Glob.capture (Glob.literal ".md")
+        |> Glob.toDataSource
 
 
 head :
@@ -66,8 +92,18 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    View.placeholder
-        { title = "Blog"
-        , tags = List.singleton "tag"
-        , body = "body things"
-        }
+    { title = "Blog"
+    , body = List.map articleMeta static.data
+    }
+
+
+articleMeta : PostMeta -> Html msg
+articleMeta post =
+    Html.div []
+        [ Html.div []
+            [ Html.text post.filePath
+            ]
+        , Html.div []
+            [ Html.text post.slug
+            ]
+        ]

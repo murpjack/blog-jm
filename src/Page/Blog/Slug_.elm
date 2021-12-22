@@ -47,25 +47,15 @@ routes =
 
 data : RouteParams -> DataSource Data
 data routeParams =
-    blogPost routeParams
-
-
-blogPost : RouteParams -> DataSource BlogPostMetadata
-blogPost routeParams =
     File.bodyWithFrontmatter blogPostDecoder
         ("content/technical/" ++ routeParams.slug ++ ".md")
 
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
-blogPostDecoder body =
-    Decode.map2 (BlogPostMetadata body)
+blogPostDecoder renderedMarkdown =
+    Decode.map2 (BlogPostMetadata renderedMarkdown)
+        (Decode.field "tags" (Decode.list Decode.string))
         (Decode.field "title" Decode.string)
-        (Decode.field "tags" tagsDecoder)
-
-
-tagsDecoder : Decoder (List String)
-tagsDecoder =
-    Decode.list Decode.string
 
 
 head :
@@ -99,7 +89,3 @@ view :
     -> View Msg
 view maybeUrl sharedModel static =
     View.placeholder static.data
-
-
-
--- ("Title: " ++ static.data.title ++ " Tags: " ++ String.join " " static.data.tags ++ " content: " ++ static.data.body)

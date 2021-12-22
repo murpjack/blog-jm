@@ -58,7 +58,7 @@ init :
             , pageUrl : Maybe PageUrl
             }
     -> ( Model, Cmd Msg )
-init navigationKey flags maybePagePath =
+init _ flags maybePagePath =
     ( { showMobileMenu = False }
     , Cmd.none
     )
