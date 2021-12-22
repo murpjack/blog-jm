@@ -1,6 +1,7 @@
 module View exposing (View, map, placeholder)
 
 import Html exposing (Html)
+import Html.Attributes as Attr
 import Types exposing (BlogPostMetadata)
 
 
@@ -22,7 +23,13 @@ placeholder blogPost =
     { title = blogPost.title
     , body =
         [ Html.div []
-            [ Html.h2 [] [ Html.text blogPost.title ]
+            -- TODO: Remove this link to '/blog' once the header includes one.
+            [ Html.div []
+                [ Html.a [ Attr.href "/blog" ]
+                    [ Html.text "back to blog"
+                    ]
+                ]
+            , Html.h2 [] [ Html.text blogPost.title ]
             , Html.text (" Tags: " ++ String.join " " blogPost.tags)
             ]
         , Html.div []

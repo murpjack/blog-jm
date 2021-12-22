@@ -5,6 +5,7 @@ import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
+import Html.Attributes as Attr
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
@@ -101,9 +102,8 @@ articleMeta : PostMeta -> Html msg
 articleMeta post =
     Html.div []
         [ Html.div []
-            [ Html.text post.filePath
-            ]
-        , Html.div []
-            [ Html.text post.slug
+            [ Html.a [ Attr.href ("/blog/" ++ post.slug) ]
+                [ Html.text post.slug
+                ]
             ]
         ]
