@@ -1,15 +1,18 @@
 module Page.Blog exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
+import DataSource.File as File
 import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attr
+import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
+import Types exposing (BlogPostFront)
 import View exposing (View)
 
 
@@ -35,36 +38,42 @@ page =
 
 
 type alias Data =
-    List PostMeta
+    List BlogPostFront
 
 
-type alias PostMeta =
-    { filePath : String
-    , slug : String
-    }
-
-
-data : DataSource Data
+data : DataSource (List BlogPostFront)
 data =
-    blogPostsGlob
+    allMetadata
 
 
-
--- DataSource.succeed ()
-
-
-blogPostsGlob : DataSource Data
-blogPostsGlob =
-    Glob.succeed
-        (\capture1 capture2 capture3 ->
-            { filePath = capture1 ++ capture2 ++ capture3
-            , slug = capture2
-            }
-        )
-        |> Glob.capture (Glob.literal "content/technical/")
-        |> Glob.capture Glob.wildcard
-        |> Glob.capture (Glob.literal ".md")
+blogPostsFiles : DataSource (List String)
+blogPostsFiles =
+    Glob.succeed identity
+        |> Glob.captureFilePath
+        |> Glob.match (Glob.literal "content/technical/")
+        |> Glob.match Glob.wildcard
+        |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
+
+
+allMetadata : DataSource (List BlogPostFront)
+allMetadata =
+    blogPostsFiles
+        |> DataSource.map
+            (List.map
+                (File.onlyFrontmatter
+                    blogPostDecoder
+                )
+            )
+        |> DataSource.resolve
+
+
+blogPostDecoder : Decoder BlogPostFront
+blogPostDecoder =
+    Decode.map3 BlogPostFront
+        (Decode.field "slug" Decode.string)
+        (Decode.field "title" Decode.string)
+        (Decode.field "tags" (Decode.list Decode.string))
 
 
 head :
@@ -98,12 +107,14 @@ view maybeUrl sharedModel static =
     }
 
 
-articleMeta : PostMeta -> Html msg
-articleMeta post =
+articleMeta : BlogPostFront -> Html msg
+articleMeta blogPost =
     Html.div []
         [ Html.div []
-            [ Html.a [ Attr.href ("/blog/" ++ post.slug) ]
-                [ Html.text post.slug
+            [ Html.a [ Attr.href ("/blog/" ++ blogPost.slug) ]
+                [ Html.text blogPost.title
                 ]
+            , Html.text (" Tags: " ++ String.join " " blogPost.tags)
+            , Html.text " Time to read: 2 mins"
             ]
         ]

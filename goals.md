@@ -1,3 +1,19 @@
+## TO-DO
+
+- [] Parse markdown to valid html
+
+- [] Path to content should be: blog -> { personal | technical } -> :post
+
+- [] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
+
+- []
+
+## IN-PROGRESS
+
+- [] Blog page list of meta shows: ~~Title~~ | Date | Time to read | ~~Tags~~
+
+## DONE
+
 - [x] Create a blog post
 
 - [x] Display blog post
@@ -6,14 +22,4 @@
 
 - [x] Create a list of post meta
 
-- [] Parse markdown to valid html
-
-- [] Rename blog page to 'technical'
-
-- [] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
-
-- [] Blog page list of meta shows: Title | Date | Time to read | Tags
-
 - [x] Add links to blog list items -> going to each page
-
-- []
