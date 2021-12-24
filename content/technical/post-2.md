@@ -3,7 +3,7 @@
   'slug': 'post-2',
   'title': 'Stephen Chow',
   'tags': ['Stephen', 'Chow'],
-  'publish-date': '11/12/2021',
+  'publishDate': '2021-12-11',
 }
 ---
 

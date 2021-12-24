@@ -3,6 +3,7 @@ module Page.Blog exposing (Data, Model, Msg, page)
 import DataSource exposing (DataSource)
 import DataSource.File as File
 import DataSource.Glob as Glob
+import Date exposing (Date, fromCalendarDate, fromIsoString)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
@@ -12,7 +13,8 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
-import Types exposing (BlogPostFront)
+import Time exposing (Month(..), Weekday(..))
+import Types exposing (BlogPostFront, IsoString)
 import View exposing (View)
 
 
@@ -70,10 +72,11 @@ allMetadata =
 
 blogPostDecoder : Decoder BlogPostFront
 blogPostDecoder =
-    Decode.map3 BlogPostFront
+    Decode.map4 BlogPostFront
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
+        (Decode.field "publishDate" Decode.string)
 
 
 head :
@@ -114,7 +117,14 @@ articleMeta blogPost =
             [ Html.a [ Attr.href ("/blog/" ++ blogPost.slug) ]
                 [ Html.text blogPost.title
                 ]
-            , Html.text (" Tags: " ++ String.join " " blogPost.tags)
-            , Html.text " Time to read: 2 mins"
+            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
+            , Html.div [] [ Html.text (toDayOrdMonthYear blogPost.publishDate) ]
+            , Html.div [] [ Html.text " Time to read: 2 mins" ]
             ]
         ]
+
+
+toDayOrdMonthYear : IsoString -> String
+toDayOrdMonthYear iso =
+    Date.format "EEEE, d MMMM y"
+        (fromIsoString "2018-09-26" |> Result.withDefault (Date.fromCalendarDate 2020 Jan 1))
