@@ -13,8 +13,8 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
-import Time exposing (Month(..), Weekday(..))
 import Types exposing (BlogPostFront, IsoString)
+import Utils as U
 import View exposing (View)
 
 
@@ -118,13 +118,7 @@ articleMeta blogPost =
                 [ Html.text blogPost.title
                 ]
             , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
-            , Html.div [] [ Html.text (toDayOrdMonthYear blogPost.publishDate) ]
+            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
             , Html.div [] [ Html.text " Time to read: 2 mins" ]
             ]
         ]
-
-
-toDayOrdMonthYear : IsoString -> String
-toDayOrdMonthYear iso =
-    Date.format "EEEE, d MMMM y"
-        (fromIsoString "2018-09-26" |> Result.withDefault (Date.fromCalendarDate 2020 Jan 1))

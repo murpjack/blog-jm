@@ -53,9 +53,11 @@ data routeParams =
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
 blogPostDecoder renderedMarkdown =
-    Decode.map2 (BlogPostMetadata renderedMarkdown)
+    Decode.map4 (BlogPostMetadata renderedMarkdown)
+        (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
+        (Decode.field "publishDate" Decode.string)
 
 
 head :

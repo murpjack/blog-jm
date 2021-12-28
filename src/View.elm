@@ -3,6 +3,7 @@ module View exposing (View, map, placeholder)
 import Html exposing (Html)
 import Html.Attributes as Attr
 import Types exposing (BlogPostMetadata)
+import Utils as U
 
 
 type alias View msg =
@@ -30,7 +31,8 @@ placeholder blogPost =
                     ]
                 ]
             , Html.h2 [] [ Html.text blogPost.title ]
-            , Html.text (" Tags: " ++ String.join " " blogPost.tags)
+            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
+            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
             ]
         , Html.div []
             [ Html.text blogPost.body

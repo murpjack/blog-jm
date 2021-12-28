@@ -1,12 +1,12 @@
 module Types exposing (..)
 
-import Date exposing (Date)
-
 
 type alias BlogPostMetadata =
     { body : String
+    , slug : String
     , title : String
     , tags : List String
+    , publishDate : IsoString
     }
 
 
@@ -15,8 +15,6 @@ type alias BlogPostFront =
     , title : String
     , tags : List String
     , publishDate : IsoString
-
-    -- , publishDate : Date
     }
 
 
