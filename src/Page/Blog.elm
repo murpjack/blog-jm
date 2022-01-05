@@ -119,6 +119,6 @@ articleMeta blogPost =
                 ]
             , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
             , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div [] [ Html.text " Time to read: 2 mins" ]
+            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead "Testing string!!") ]
             ]
         ]

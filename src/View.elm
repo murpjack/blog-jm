@@ -35,7 +35,8 @@ placeholder blogPost =
             , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
             ]
         , Html.div []
-            [ Html.text blogPost.body
+            [ Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
+            , Html.text blogPost.body
             ]
         ]
     }
