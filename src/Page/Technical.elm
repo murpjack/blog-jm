@@ -1,20 +1,15 @@
-module Page.Blog exposing (Data, Model, Msg, page, view)
+module Page.Technical exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
 import DataSource.File as File
 import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
-import Html exposing (Html)
-import Html.Attributes as Attr
 import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
-import Pages.PageUrl exposing (PageUrl)
+import Page.Blog exposing (view)
 import Pages.Url
-import Shared
 import Types exposing (BlogPostMetadata)
-import Utils as U
-import View exposing (View)
 
 
 type alias Model =
@@ -94,28 +89,3 @@ head static =
         , title = "TODO title" -- metadata.title -- TODO
         }
         |> Seo.website
-
-
-view :
-    Maybe PageUrl
-    -> Shared.Model
-    -> StaticPayload Data RouteParams
-    -> View Msg
-view maybeUrl sharedModel static =
-    { title = "Blog"
-    , body = List.map articleMeta static.data
-    }
-
-
-articleMeta : BlogPostMetadata -> Html msg
-articleMeta blogPost =
-    Html.div []
-        [ Html.div []
-            [ Html.a [ Attr.href ("/blog/" ++ blogPost.slug) ]
-                [ Html.text blogPost.title
-                ]
-            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
-            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
-            ]
-        ]
