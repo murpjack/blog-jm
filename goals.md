@@ -2,17 +2,18 @@
 
 - [] Handle read times more explicitly
 
-- [] Path to content should be: blog -> { personal | technical } -> :post
+- [] Handle 'invalid date' formats in Frontmatter'
 
 - [] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
 
-- [] Handle 'invalid date' formats in Frontmatter'
-
 ## IN-PROGRESS
 
-- [] Parse markdown to valid html
+- [] Add a header
+- [] Path to content should be: blog -> { personal | technical } -> :post
 
 ## DONE
+
+- [x] Parse markdown to valid html
 
 - [x] Blog page list of meta shows: ~~Title~~ | ~~Date~~ | ~~Time to read~~ | ~~Tags~~
 

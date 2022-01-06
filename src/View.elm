@@ -2,6 +2,8 @@ module View exposing (View, map, placeholder)
 
 import Html exposing (Html)
 import Html.Attributes as Attr
+import Markdown.Parser
+import Markdown.Renderer
 import Types exposing (BlogPostMetadata)
 import Utils as U
 
@@ -21,6 +23,21 @@ map fn doc =
 
 placeholder : BlogPostMetadata -> View msg
 placeholder blogPost =
+    let
+        -- TODO: Refactor and abstract 'postBody -> renderedMarkdown' out of 'placeholder'.
+        postBody =
+            case
+                blogPost.body
+                    |> markdownToView
+            of
+                Ok renderedMarkdown ->
+                    Html.div [] renderedMarkdown
+
+                Err error ->
+                    Html.div [] [ Html.text error ]
+
+        -- |> Decode.fromResult
+    in
     { title = blogPost.title
     , body =
         [ Html.div []
@@ -36,7 +53,22 @@ placeholder blogPost =
             ]
         , Html.div []
             [ Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
-            , Html.text blogPost.body
+            , postBody
             ]
         ]
     }
+
+
+markdownToView :
+    String
+    -> Result String (List (Html msg))
+markdownToView markdownString =
+    markdownString
+        |> Markdown.Parser.parse
+        |> Result.mapError (\_ -> "Markdown error.")
+        |> Result.andThen
+            (\blocks ->
+                Markdown.Renderer.render
+                    Markdown.Renderer.defaultHtmlRenderer
+                    blocks
+            )
