@@ -6,6 +6,10 @@
 
 - [] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
 
+- [] Translate anything which has a corresponding translation.
+
+- [] Handle any 'not translated' content errors.
+
 ## IN-PROGRESS
 
 - [] Add a header

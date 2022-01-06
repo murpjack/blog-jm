@@ -40,7 +40,8 @@ placeholder blogPost =
     in
     { title = blogPost.title
     , body =
-        [ Html.div []
+        [ header
+        , Html.div []
             -- TODO: Remove this link to '/blog' once the header includes one.
             [ Html.div []
                 [ Html.a [ Attr.href "/blog" ]
@@ -72,3 +73,17 @@ markdownToView markdownString =
                     Markdown.Renderer.defaultHtmlRenderer
                     blocks
             )
+
+
+header : Html msg
+header =
+    Html.div []
+        [ Html.div [] [ Html.text "header" ]
+        , Html.a [ Attr.href "/technical" ]
+            [ Html.text "Technical"
+            ]
+        , Html.text " | "
+        , Html.a [ Attr.href "/leisure" ]
+            [ Html.text "Leisure"
+            ]
+        ]
