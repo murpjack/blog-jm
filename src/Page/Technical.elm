@@ -39,7 +39,12 @@ type alias Data =
 
 data : DataSource (List BlogPostMetadata)
 data =
-    allMetadata
+    blogPostsFiles
+        |> DataSource.map
+            (List.map
+                (File.bodyWithFrontmatter blogPostDecoder)
+            )
+        |> DataSource.resolve
 
 
 blogPostsFiles : DataSource (List String)
@@ -50,16 +55,6 @@ blogPostsFiles =
         |> Glob.match Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
-
-
-allMetadata : DataSource (List BlogPostMetadata)
-allMetadata =
-    blogPostsFiles
-        |> DataSource.map
-            (List.map
-                (File.bodyWithFrontmatter blogPostDecoder)
-            )
-        |> DataSource.resolve
 
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
