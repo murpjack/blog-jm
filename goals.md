@@ -1,6 +1,6 @@
 ## TO-DO
 
-- [] Parse markdown to valid html
+- [] Handle read times more explicitly
 
 - [] Path to content should be: blog -> { personal | technical } -> :post
 
@@ -10,9 +10,11 @@
 
 ## IN-PROGRESS
 
-- [] Blog page list of meta shows: ~~Title~~ | ~~Date~~ | Time to read | ~~Tags~~
+- [] Parse markdown to valid html
 
 ## DONE
+
+- [x] Blog page list of meta shows: ~~Title~~ | ~~Date~~ | ~~Time to read~~ | ~~Tags~~
 
 - [x] Create a blog post
 

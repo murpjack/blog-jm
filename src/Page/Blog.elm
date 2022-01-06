@@ -3,7 +3,6 @@ module Page.Blog exposing (Data, Model, Msg, page)
 import DataSource exposing (DataSource)
 import DataSource.File as File
 import DataSource.Glob as Glob
-import Date exposing (Date, fromCalendarDate, fromIsoString)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
@@ -13,7 +12,7 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
-import Types exposing (BlogPostFront, IsoString)
+import Types exposing (BlogPostMetadata)
 import Utils as U
 import View exposing (View)
 
@@ -40,10 +39,10 @@ page =
 
 
 type alias Data =
-    List BlogPostFront
+    List BlogPostMetadata
 
 
-data : DataSource (List BlogPostFront)
+data : DataSource (List BlogPostMetadata)
 data =
     allMetadata
 
@@ -58,21 +57,19 @@ blogPostsFiles =
         |> Glob.toDataSource
 
 
-allMetadata : DataSource (List BlogPostFront)
+allMetadata : DataSource (List BlogPostMetadata)
 allMetadata =
     blogPostsFiles
         |> DataSource.map
             (List.map
-                (File.onlyFrontmatter
-                    blogPostDecoder
-                )
+                (File.bodyWithFrontmatter blogPostDecoder)
             )
         |> DataSource.resolve
 
 
-blogPostDecoder : Decoder BlogPostFront
-blogPostDecoder =
-    Decode.map4 BlogPostFront
+blogPostDecoder : String -> Decoder BlogPostMetadata
+blogPostDecoder renderedMarkdown =
+    Decode.map4 (BlogPostMetadata renderedMarkdown)
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
@@ -110,7 +107,7 @@ view maybeUrl sharedModel static =
     }
 
 
-articleMeta : BlogPostFront -> Html msg
+articleMeta : BlogPostMetadata -> Html msg
 articleMeta blogPost =
     Html.div []
         [ Html.div []
@@ -119,6 +116,6 @@ articleMeta blogPost =
                 ]
             , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
             , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead "Testing string!!") ]
+            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
             ]
         ]

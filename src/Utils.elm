@@ -36,8 +36,8 @@ timeToRead postBody =
             else
                 " minutes"
     in
-    if (timeInSeconds // 60 == 0) && (modBy 60 timeInSeconds < 30) then
-        "less than a ½ minute"
+    if (timeInSeconds // 60 == 0) && (modBy 60 timeInSeconds < 60) then
+        "less than a minute"
 
     else if modBy 60 timeInSeconds < 30 then
         String.fromInt minutesFromSeconds ++ "½" ++ minuteOrMinutes
