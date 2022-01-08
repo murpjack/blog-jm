@@ -61,6 +61,10 @@ type alias Data =
     ()
 
 
+
+-- TODO: Turn this into an 'About me' page
+
+
 view :
     Maybe PageUrl
     -> Shared.Model
