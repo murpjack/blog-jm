@@ -43,12 +43,7 @@ placeholder blogPost =
         [ header
         , Html.div []
             -- TODO: Remove this link to '/blog' once the header includes one.
-            [ Html.div []
-                [ Html.a [ Attr.href "/blog" ]
-                    [ Html.text "back to blog"
-                    ]
-                ]
-            , Html.h2 [] [ Html.text blogPost.title ]
+            [ Html.h2 [] [ Html.text blogPost.title ]
             , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
             , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
             ]
@@ -80,10 +75,7 @@ header =
     Html.div []
         [ Html.div [] [ Html.text "header" ]
         , Html.a [ Attr.href "/technical" ]
-            [ Html.text "Technical"
-            ]
-        , Html.text " | "
-        , Html.a [ Attr.href "/leisure" ]
-            [ Html.text "Leisure"
+            [ Html.p [] [ Html.text "Blog" ]
+            , Html.p [] [ Html.text "(Technical)" ]
             ]
         ]
