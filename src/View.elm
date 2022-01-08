@@ -1,4 +1,4 @@
-module View exposing (View, map, placeholder)
+module View exposing (View, header, map, placeholder)
 
 import Html exposing (Html)
 import Html.Attributes as Attr
