@@ -73,7 +73,7 @@ markdownToView markdownString =
 header : Html msg
 header =
     Html.div []
-        [ Html.div [] [ Html.text "header" ]
+        [ Html.a [ Attr.href "/" ] [ Html.text "header" ]
         , Html.a [ Attr.href "/technical" ]
             [ Html.p [] [ Html.text "Blog" ]
             , Html.p [] [ Html.text "(Technical)" ]

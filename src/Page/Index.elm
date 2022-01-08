@@ -4,11 +4,12 @@ import DataSource exposing (DataSource)
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
+import Html.Attributes as Attr
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
-import View exposing (View)
+import View exposing (View, header)
 
 
 type alias Model =
@@ -62,7 +63,7 @@ type alias Data =
 
 
 
--- TODO: Turn this into an 'About me' page
+-- TODO: Abstract content copy to a separate file - maybe JSON or .po file?
 
 
 view :
@@ -71,10 +72,44 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
+    let
+        content =
+            { tagLine = "Hello simple website."
+            , description = "My name is Jack. I make things"
+            , projects =
+                [ { title = "proj1"
+                  , link = "abc.co.uk"
+                  }
+                ]
+            , talks =
+                [ { title = "talk1"
+                  , link = "abc.co.uk"
+                  }
+                ]
+            }
+    in
     { title = "Blog"
     , body =
-        [ Html.div []
-            [ Html.text "Index"
+        [ header
+        , Html.div []
+            [ Html.div [] [ Html.text content.tagLine ]
+            , Html.div [] [ Html.text content.description ]
+            , Html.div []
+                (List.map
+                    (\val ->
+                        Html.div []
+                            [ Html.a [ Attr.href val.link, Attr.target "_blank" ] [ Html.text val.title ] ]
+                    )
+                    content.projects
+                )
+            , Html.div []
+                (List.map
+                    (\val ->
+                        Html.div []
+                            [ Html.a [ Attr.href val.link, Attr.target "_blank" ] [ Html.text val.title ] ]
+                    )
+                    content.talks
+                )
             ]
         ]
     }
