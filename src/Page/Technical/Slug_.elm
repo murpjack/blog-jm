@@ -1,19 +1,16 @@
-module Page.Blog exposing (Data, Model, Msg, page, view)
+module Page.Technical.Slug_ exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
 import DataSource.File as File
 import DataSource.Glob as Glob
 import Head
 import Head.Seo as Seo
-import Html exposing (Html)
-import Html.Attributes as Attr
 import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
 import Types exposing (BlogPostMetadata)
-import Utils as U
 import View exposing (View)
 
 
@@ -26,40 +23,32 @@ type alias Msg =
 
 
 type alias RouteParams =
-    {}
+    { slug : String }
 
 
 page : Page RouteParams Data
 page =
-    Page.single
+    Page.prerender
         { head = head
+        , routes = routes
         , data = data
         }
         |> Page.buildNoState { view = view }
 
 
-type alias Data =
-    List BlogPostMetadata
-
-
-data : DataSource (List BlogPostMetadata)
-data =
-    blogPostsFiles
-        |> DataSource.map
-            (List.map
-                (File.bodyWithFrontmatter blogPostDecoder)
-            )
-        |> DataSource.resolve
-
-
-blogPostsFiles : DataSource (List String)
-blogPostsFiles =
-    Glob.succeed identity
-        |> Glob.captureFilePath
+routes : DataSource (List RouteParams)
+routes =
+    Glob.succeed RouteParams
         |> Glob.match (Glob.literal "content/technical/")
-        |> Glob.match Glob.wildcard
+        |> Glob.capture Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
+
+
+data : RouteParams -> DataSource Data
+data routeParams =
+    File.bodyWithFrontmatter blogPostDecoder
+        ("content/technical/" ++ routeParams.slug ++ ".md")
 
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
@@ -77,7 +66,7 @@ head :
 head static =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "JM blog"
         , image =
             { url = Pages.Url.external "TODO"
             , alt = "elm-pages logo"
@@ -86,9 +75,13 @@ head static =
             }
         , description = "TODO"
         , locale = Nothing
-        , title = "TODO title" -- metadata.title -- TODO
+        , title = static.data.title ++ " | JM blog"
         }
         |> Seo.website
+
+
+type alias Data =
+    BlogPostMetadata
 
 
 view :
@@ -97,20 +90,4 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    { title = "Blog"
-    , body = List.map articleMeta static.data
-    }
-
-
-articleMeta : BlogPostMetadata -> Html msg
-articleMeta blogPost =
-    Html.div []
-        [ Html.div []
-            [ Html.a [ Attr.href ("/blog/" ++ blogPost.slug) ]
-                [ Html.text blogPost.title
-                ]
-            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
-            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
-            ]
-        ]
+    View.placeholder static.data
