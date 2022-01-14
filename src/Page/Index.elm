@@ -1,10 +1,12 @@
-module Page.Index exposing (Data, Model, Msg, page)
+module Page.Index exposing (AboutPageContent, Data, Language(..), Model, Msg, Project, aboutPageDecoder, aboutPageView, page)
 
 import DataSource exposing (DataSource)
+import DataSource.File as File
 import Head
 import Head.Seo as Seo
 import Html exposing (Html)
 import Html.Attributes as Attr
+import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
@@ -35,7 +37,46 @@ page =
 
 data : DataSource Data
 data =
-    DataSource.succeed ()
+    aboutPageDecoder EN
+
+
+aboutPageDecoder : Language -> DataSource Data
+aboutPageDecoder l =
+    File.jsonFile
+        (Decode.field (getLanguageAbr l)
+            (Decode.map4
+                AboutPageContent
+                (Decode.field "tagLine" Decode.string)
+                (Decode.field "description" Decode.string)
+                (Decode.field "projects" (Decode.list projectDecoder))
+                (Decode.field "talks" (Decode.list projectDecoder))
+            )
+        )
+        "/public/about.json"
+
+
+type Language
+    = EN
+    | CN
+
+
+getLanguageAbr : Language -> String
+getLanguageAbr l =
+    case l of
+        EN ->
+            "en"
+
+        CN ->
+            "cn"
+
+
+projectDecoder : Decoder Project
+projectDecoder =
+    Decode.map3
+        Project
+        (Decode.field "title" Decode.string)
+        (Decode.field "link" Decode.string)
+        (Decode.field "sameSite" Decode.bool)
 
 
 head :
@@ -59,11 +100,21 @@ head static =
 
 
 type alias Data =
-    ()
+    AboutPageContent
 
 
+type alias AboutPageContent =
+    { tagLine : String
+    , description : String
+    , projects :
+        List Project
+    , talks :
+        List Project
+    }
 
--- TODO: Abstract content copy to a separate file - maybe JSON or .po file?
+
+type alias Project =
+    { title : String, link : String, sameSite : Bool }
 
 
 view :
@@ -74,42 +125,38 @@ view :
 view maybeUrl sharedModel static =
     let
         content =
-            { tagLine = "Hello simple website."
-            , description = "My name is Jack. I make things"
-            , projects =
-                [ { title = "proj1"
-                  , link = "abc.co.uk"
-                  }
-                ]
-            , talks =
-                [ { title = "talk1"
-                  , link = "abc.co.uk"
-                  }
-                ]
-            }
+            static.data
     in
     { title = "Blog"
     , body =
-        [ header
-        , Html.div []
-            [ Html.div [] [ Html.text content.tagLine ]
-            , Html.div [] [ Html.text content.description ]
-            , Html.div []
-                (List.map
-                    (\val ->
-                        Html.div []
-                            [ Html.a [ Attr.href val.link, Attr.target "_blank" ] [ Html.text val.title ] ]
-                    )
-                    content.projects
-                )
-            , Html.div []
-                (List.map
-                    (\val ->
-                        Html.div []
-                            [ Html.a [ Attr.href val.link, Attr.target "_blank" ] [ Html.text val.title ] ]
-                    )
-                    content.talks
-                )
-            ]
-        ]
+        aboutPageView content
     }
+
+
+aboutPageView : Data -> List (Html Msg)
+aboutPageView content =
+    [ header
+    , Html.div []
+        [ Html.div [] [ Html.text content.tagLine ]
+        , Html.div [] [ Html.text content.description ]
+        , Html.div []
+            (List.map
+                projectLink
+                content.projects
+            )
+        , Html.div []
+            (List.map
+                projectLink
+                content.talks
+            )
+        ]
+    ]
+
+
+projectLink : Project -> Html msg
+projectLink p =
+    if p.sameSite then
+        Html.a [ Attr.href p.link ] [ Html.text p.title ]
+
+    else
+        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.title ]

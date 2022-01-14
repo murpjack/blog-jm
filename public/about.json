@@ -1,0 +1,26 @@
+{
+  "tagLine": "Hello simple EN website.",
+  "description": "My name is Jack. I make things",
+  "en": {
+    "tagLine": "Hello simple EN website.",
+    "description": "My name is Jack. I make things",
+    "projects": [
+      { "title": "cn blog", "link": "/cn", "sameSite": true },
+      { "title": "proj1", "link": "https://elm-pages.com/", "sameSite": false }
+    ],
+    "talks": [
+      { "title": "talk1", "link": "https://elm-pages.com/", "sameSite": false }
+    ]
+  },
+  "cn": {
+    "tagLine": "这是中文网站。",
+    "description": "我叫 Jack。",
+    "projects": [
+      { "title": "cn blog", "link": "/cn", "sameSite": true },
+      { "title": "作业1", "link": "https://elm-pages.com/", "sameSite": false }
+    ],
+    "talks": [
+      { "title": "播客1", "link": "https://elm-pages.com/", "sameSite": false }
+    ]
+  }
+}
