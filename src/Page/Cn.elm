@@ -4,7 +4,7 @@ import DataSource exposing (DataSource)
 import Head
 import Head.Seo as Seo
 import Page exposing (Page, StaticPayload)
-import Page.Index exposing (Language(..), Project, aboutPageDecoder, aboutPageView)
+import Page.Index exposing (AboutPageContent, Language(..), Project, aboutPageDecoder, aboutPageView)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
@@ -40,7 +40,7 @@ data =
 head :
     StaticPayload Data RouteParams
     -> List Head.Tag
-head static =
+head _ =
     Seo.summary
         { canonicalUrlOverride = Nothing
         , siteName = "elm-pages"
@@ -58,13 +58,7 @@ head static =
 
 
 type alias Data =
-    { tagLine : String
-    , description : String
-    , projects :
-        List Project
-    , talks :
-        List Project
-    }
+    AboutPageContent
 
 
 view :
@@ -72,7 +66,7 @@ view :
     -> Shared.Model
     -> StaticPayload Data RouteParams
     -> View Msg
-view maybeUrl sharedModel static =
+view _ _ static =
     let
         content =
             static.data

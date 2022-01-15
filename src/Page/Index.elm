@@ -40,6 +40,10 @@ data =
     aboutPageDecoder EN
 
 
+
+-- TODO: Implement translations using generated translations (.po)file with keys
+
+
 aboutPageDecoder : Language -> DataSource Data
 aboutPageDecoder l =
     File.jsonFile
