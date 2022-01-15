@@ -1,0 +1,39 @@
+{
+  "firstName": "John",
+  "givenName": "Jack",
+  "middleNames": null,
+  "familyName": "Murphy",
+
+  "contactLinks": [
+    { "label": "con1", "value": "abc.com" },
+    { "label": "con2", "value": "abc.com" },
+    { "label": "con3", "value": "abc.com" }
+  ],
+
+  "overview": "Hello simple EN website.",
+
+  "employment": [
+    {
+      "employer": "the good company",
+      "role": "useful person",
+      "dates": ["yesterday", "today"]
+    }
+  ],
+
+  "education": [
+    {
+      "location": "place",
+      "dates": ["yesterday", "today"],
+      "certifications": "certifications"
+    }
+  ],
+
+  "portfolio": [
+    {
+      "title": "proj1",
+      "description": "description",
+      "link": "https://elm-pages.com/",
+      "sameSite": false
+    }
+  ]
+}

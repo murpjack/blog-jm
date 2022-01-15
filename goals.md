@@ -1,21 +1,26 @@
 ## TO-DO
 
-- [] Handle read times more explicitly
+- [ ] Handle read times more explicitly - eg.
+- [ ] Handle 'invalid date' formats in Frontmatter'
 
-- [] Handle 'invalid date' formats in Frontmatter'
+- [ ] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
+- [ ] Path to content should be: blog -> { personal | ~~technical~~ } -> :post
 
-- [] Create a blog page -> 'personal' (Once technical is styled and displays correct content)
-
-- [] Translate anything which has a corresponding translation.
-
-- [] Handle any 'not translated' content errors.
+- [ ] Translate anything which has a corresponding translation.
+- [ ] Implement translations using generated translations (.po)file with keys
+- [ ] Handle any 'not translated' content errors.
 
 ## IN-PROGRESS
 
-- [] Add a header
-- [] Path to content should be: blog -> { personal | technical } -> :post
+- [ ] Style header
+
+- [ ] Add page for creating CV
+  - Produce a view, given a (cv.)json format
+  - It should be possible to select a different view
 
 ## DONE
+
+- [x] Add a header
 
 - [x] Parse markdown to valid html
 
