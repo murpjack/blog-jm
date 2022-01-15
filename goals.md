@@ -15,8 +15,11 @@
 - [ ] Style header
 
 - [ ] Add page for creating CV
+
   - Produce a view, given a (cv.)json format
   - It should be possible to select a different view
+
+- [ ] New link to CV in header
 
 ## DONE
 
