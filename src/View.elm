@@ -74,6 +74,7 @@ header : Html msg
 header =
     Html.div []
         [ Html.a [ Attr.href "/" ] [ Html.text "header" ]
+        , Html.a [ Attr.href "/cv" ] [ Html.text "CV" ]
         , Html.a [ Attr.href "/technical" ]
             [ Html.p [] [ Html.text "Blog" ]
             , Html.p [] [ Html.text "(Technical)" ]
