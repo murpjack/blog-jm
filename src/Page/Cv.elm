@@ -1,4 +1,4 @@
-module Page.Cv exposing (AboutPageContent, Data, Language(..), Model, Msg, aboutPageDecoder, aboutPageView, page)
+module Page.Cv exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
 import DataSource.File as File
@@ -37,29 +37,60 @@ page =
 
 data : DataSource Data
 data =
-    aboutPageDecoder EN
+    cvDecoder
 
 
-aboutPageDecoder : DataSource Data
-aboutPageDecoder =
+cvDecoder : DataSource Data
+cvDecoder =
     File.jsonFile
-        (Decode.map4
-            AboutPageContent
-            (Decode.field "firstName" Decode.string)
-            (Decode.field "middleNames" Decode.string)
-            (Decode.field "familyName" Decode.string)
-            (Decode.field "description" Decode.string)
-            (Decode.field "projects" (Decode.list projectDecoder))
-            (Decode.field "talks" (Decode.list projectDecoder))
+        (Decode.field "data"
+            (Decode.map8
+                CvContent
+                (Decode.field "firstNames" Decode.string)
+                (Decode.field "givenNames" Decode.string)
+                (Decode.field "familyName" Decode.string)
+                (Decode.field "contactLinks" (Decode.list labelValueDecoder))
+                (Decode.field "statement" Decode.string)
+                (Decode.field "employment" (Decode.list employmentDecoder))
+                (Decode.field "education" (Decode.list educationDecoder))
+                (Decode.field "projects" (Decode.list projectDecoder))
+            )
         )
         "/public/cv.json"
 
 
-labelValueDecoder : Decoder Project
+labelValueDecoder : Decoder LabelValue
 labelValueDecoder =
+    Decode.map2
+        LabelValue
+        (Decode.field "label" Decode.string)
+        (Decode.field "value" Decode.string)
+
+
+employmentDecoder : Decoder Employment
+employmentDecoder =
     Decode.map3
+        Employment
+        (Decode.field "name" Decode.string)
+        (Decode.field "position" Decode.string)
+        (Decode.field "dates" (Decode.list Decode.string))
+
+
+educationDecoder : Decoder Education
+educationDecoder =
+    Decode.map3
+        Education
+        (Decode.field "name" Decode.string)
+        (Decode.field "certifications" Decode.string)
+        (Decode.field "dates" (Decode.list Decode.string))
+
+
+projectDecoder : Decoder Project
+projectDecoder =
+    Decode.map4
         Project
-        (Decode.field "title" Decode.string)
+        (Decode.field "name" Decode.string)
+        (Decode.field "description" Decode.string)
         (Decode.field "link" Decode.string)
         (Decode.field "sameSite" Decode.bool)
 
@@ -88,63 +119,42 @@ type alias Data =
     CvContent
 
 
-type alias AboutPageContent =
-    { tagLine : String
-    , description : String
-    , projects :
-        List Project
-    , talks :
-        List Project
-    }
-
-
 type alias CvContent =
-    { firstName : String
-    , givenName : String
-    , middleNames : any
+    { firstNames : String
+    , givenNames : String
     , familyName : String
-    , contactLinks : List ContactLink
-    , overview : String
+    , contactLinks : List LabelValue
+    , statement : String
     , employment : List Employment
     , education : List Education
-    , portfolio : List Portfolio
+    , projects : List Project
     }
 
 
-type alias ContactLink =
-    { label : String
-    , value : String
-    }
+type alias LabelValue =
+    { value : String, label : String }
 
 
 type alias Employment =
-    { employer : String
-    , role : String
+    { name : String
+    , position : String
     , dates : List String
     }
 
 
 type alias Education =
-    { location : String
-    , dates : List String
+    { name : String
     , certifications : String
-    }
-
-
-type alias Portfolio =
-    { title : String
-    , description : String
-    , link : String
-    , sameSite : boolean
+    , dates : List String
     }
 
 
 type alias Project =
-    { title : String, link : String, sameSite : Bool }
-
-
-type alias LabelValue =
-    { value : String, label : String }
+    { name : String
+    , description : String
+    , link : String
+    , sameSite : Bool
+    }
 
 
 view :
@@ -159,25 +169,35 @@ view maybeUrl sharedModel static =
     in
     { title = "Blog"
     , body =
-        aboutPageView content
+        cvPageView content
     }
 
 
-aboutPageView : Data -> List (Html Msg)
-aboutPageView content =
+cvPageView : Data -> List (Html Msg)
+cvPageView content =
     [ header
     , Html.div []
-        [ Html.div [] [ Html.text content.tagLine ]
-        , Html.div [] [ Html.text content.description ]
+        [ Html.div [] [ Html.text content.firstNames ]
         , Html.div []
             (List.map
-                projectLink
-                content.projects
+                (\c -> Html.a [ Attr.href c.value, Attr.target "_blank" ] [ Html.text c.label ])
+                content.contactLinks
+            )
+        , Html.div [] [ Html.text content.statement ]
+        , Html.div []
+            (List.map
+                (\emp -> Html.div [] [ Html.text emp.name ])
+                content.employment
+            )
+        , Html.div []
+            (List.map
+                (\emp -> Html.div [] [ Html.text emp.name ])
+                content.education
             )
         , Html.div []
             (List.map
                 projectLink
-                content.talks
+                content.projects
             )
         ]
     ]
@@ -186,7 +206,7 @@ aboutPageView content =
 projectLink : Project -> Html msg
 projectLink p =
     if p.sameSite then
-        Html.a [ Attr.href p.link ] [ Html.text p.title ]
+        Html.a [ Attr.href p.link ] [ Html.text p.name ]
 
     else
-        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.title ]
+        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.name ]
