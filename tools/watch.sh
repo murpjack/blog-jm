@@ -3,7 +3,7 @@
 echo "Watching files..." 
 inotifywait --monitor --recursive \
   --event modify --format "%w %f" \
-  ./src/styles/ |
+  ./styles/ |
 while read filename; do
   
   rm -rf dist
