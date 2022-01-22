@@ -1,5 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   background-color: #f8f8f8;
+  margin: 0;
+  padding: 0;
 }
 
 .wrapper {
@@ -7,30 +15,40 @@ body {
   margin: 0 auto;
 }
 
-.header {
-  padding: 0 10px;
+.header__banner {
+  width: 100%;
+  background-color: #9dd9d2;
+  padding: 10px;
+}
+.header > .wrapper {
+  padding: 15px 10px 5px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
 }
-
-.header > a {
+.header > .wrapper > a {
   text-decoration: none;
+  color: #222;
+  font-size: 16px;
+  font-family: sans-serif;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: 1px;
 }
-
-.header > div {
+.header > .wrapper > div {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
 }
-
-.header > div > a {
+.header > .wrapper > div > a {
+  color: #222;
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
   text-decoration: none;
   margin-right: 10px;
-}
-
-.header > div > a > p {
-  margin: 0px;
 }
 
 .footer > .wrapper {
@@ -39,23 +57,79 @@ body {
   align-items: flex-start;
   justify-content: space-between;
 }
+.footer > .wrapper > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.footer > .wrapper > div > a {
+  color: #222;
+  font-size: 14px;
+  font-family: sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  margin-right: 10px;
+}
 
-@media print {
-  .header {
-    display: none;
-  }
-  .footer {
-    display: none;
-  }
+/*
+About - Home
+*/
+.about-page {
+  height: 350px;
+  background-color: white;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.about-page:before {
+  background-color: #9dd9d2;
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+}
+.about-page__inner > h1 {
+  color: #222;
+  display: inline-block;
+  font-size: 50px;
+  font-weight: 800;
+  font-family: sans-serif;
+  margin: 0;
+  position: relative;
+}
+.about-page__inner > span {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #9dd9d2;
+  display: inline-block;
+  margin-left: 10px;
+  margin-bottom: -1px;
 }
 
 /* 
 CV styles
 */
-
 .cv {
   background-color: white;
   margin: 30px auto;
   max-width: 792px;
   /* min-height: 1123px; */
+}
+
+@media print {
+  .header {
+    display: none;
+  }
+
+  .footer {
+    display: none;
+  }
 }

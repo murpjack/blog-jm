@@ -1,9 +1,7 @@
 {
-  "tagLine": "Hello simple EN website.",
-  "description": "My name is Jack. I make things",
   "en": {
-    "tagLine": "Hello simple EN website.",
-    "description": "My name is Jack. I make things",
+    "tagLine": "WELCOME",
+    "description": "I'm a web developer with experience building attractive, scalable web applications.",
     "projects": [
       { "title": "cn blog", "link": "/cn", "sameSite": true },
       { "title": "proj1", "link": "https://elm-pages.com/", "sameSite": false }
@@ -13,7 +11,7 @@
     ]
   },
   "cn": {
-    "tagLine": "这是中文网站。",
+    "tagLine": "欢迎光临。",
     "description": "我叫 Jack。",
     "projects": [
       { "title": "cn blog", "link": "/cn", "sameSite": true },

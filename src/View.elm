@@ -81,14 +81,20 @@ header : Html msg
 header =
     Html.div
         [ Attr.class "header"
-        , Attr.class "wrapper"
         ]
-        [ Html.a [ Attr.href "/" ] [ Html.text "Jack Murphy" ]
-        , Html.div []
-            [ Html.a [ Attr.href "/cv" ] [ Html.text "CV" ]
-            , Html.a [ Attr.href "/technical" ]
-                [ Html.p [] [ Html.text "Blog" ]
-                , Html.p [] [ Html.text "(Technical)" ]
+        [ Html.div [ Attr.class "header__banner" ] []
+        , Html.div [ Attr.class "wrapper" ]
+            [ Html.a [ Attr.href "/" ] [ Html.text "Jack Murphy" ]
+            , Html.div []
+                [ Html.a [ Attr.href "/" ]
+                    [ Html.text "ABOUT"
+                    ]
+                , Html.a [ Attr.href "/cv" ]
+                    [ Html.text "CV"
+                    ]
+                , Html.a [ Attr.href "/technical" ]
+                    [ Html.text "BLOG"
+                    ]
                 ]
             ]
         ]
@@ -98,11 +104,13 @@ footer : Html msg
 footer =
     Html.div [ Attr.class "footer" ]
         [ Html.div [ Attr.class "wrapper" ]
-            [ Html.div []
-                [ Html.a [ Attr.href "/cv" ] [ Html.text "CV" ]
+            [ Html.p [] [ Html.text "Written in Elm." ]
+            , Html.div []
+                [ Html.a [ Attr.href "/cv" ]
+                    [ Html.text "CV"
+                    ]
                 , Html.a [ Attr.href "/technical" ]
-                    [ Html.p [] [ Html.text "Blog" ]
-                    , Html.p [] [ Html.text "(Technical)" ]
+                    [ Html.text "BLOG"
                     ]
                 ]
             ]
