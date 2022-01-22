@@ -100,8 +100,7 @@ view maybeUrl sharedModel static =
     { title = "Blog"
     , body =
         globalPageLayout
-            [ Html.div [ Attr.class "wrapper" ] (List.map articleMeta static.data)
-            ]
+            (List.map articleMeta static.data)
     }
 
 

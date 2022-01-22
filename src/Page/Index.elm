@@ -140,20 +140,18 @@ view maybeUrl sharedModel static =
 aboutPageView : Data -> List (Html Msg)
 aboutPageView content =
     globalPageLayout
-        [ Html.div [ Attr.class "wrapper" ]
-            [ Html.div [] [ Html.text content.tagLine ]
-            , Html.div [] [ Html.text content.description ]
-            , Html.div []
-                (List.map
-                    projectLink
-                    content.projects
-                )
-            , Html.div []
-                (List.map
-                    projectLink
-                    content.talks
-                )
-            ]
+        [ Html.div [] [ Html.text content.tagLine ]
+        , Html.div [] [ Html.text content.description ]
+        , Html.div []
+            (List.map
+                projectLink
+                content.projects
+            )
+        , Html.div []
+            (List.map
+                projectLink
+                content.talks
+            )
         ]
 
 

@@ -176,30 +176,28 @@ view maybeUrl sharedModel static =
 cvPageView : Data -> List (Html Msg)
 cvPageView content =
     globalPageLayout
-        [ Html.div [ Attr.class "wrapper" ]
-            [ Html.div [] [ Html.text content.firstNames ]
-            , Html.div []
-                (List.map
-                    (\c -> Html.a [ Attr.href c.value, Attr.target "_blank" ] [ Html.text c.label ])
-                    content.contactLinks
-                )
-            , Html.div [] [ Html.text content.statement ]
-            , Html.div []
-                (List.map
-                    (\emp -> Html.div [] [ Html.text emp.name ])
-                    content.employment
-                )
-            , Html.div []
-                (List.map
-                    (\emp -> Html.div [] [ Html.text emp.name ])
-                    content.education
-                )
-            , Html.div []
-                (List.map
-                    projectLink
-                    content.projects
-                )
-            ]
+        [ Html.div [] [ Html.text content.firstNames ]
+        , Html.div []
+            (List.map
+                (\c -> Html.a [ Attr.href c.value, Attr.target "_blank" ] [ Html.text c.label ])
+                content.contactLinks
+            )
+        , Html.div [] [ Html.text content.statement ]
+        , Html.div []
+            (List.map
+                (\emp -> Html.div [] [ Html.text emp.name ])
+                content.employment
+            )
+        , Html.div []
+            (List.map
+                (\emp -> Html.div [] [ Html.text emp.name ])
+                content.education
+            )
+        , Html.div []
+            (List.map
+                projectLink
+                content.projects
+            )
         ]
 
 
