@@ -1,3 +1,7 @@
+body {
+  background-color: #f8f8f8;
+}
+
 .wrapper {
   max-width: 1000px;
   margin: 0 auto;
@@ -27,4 +31,31 @@
 
 .header > div > a > p {
   margin: 0px;
+}
+
+.footer > .wrapper {
+  padding: 0 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+@media print {
+  .header {
+    display: none;
+  }
+  .footer {
+    display: none;
+  }
+}
+
+/* 
+CV styles
+*/
+
+.cv {
+  background-color: white;
+  margin: 30px auto;
+  max-width: 792px;
+  /* min-height: 1123px; */
 }

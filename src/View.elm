@@ -98,8 +98,7 @@ footer : Html msg
 footer =
     Html.div [ Attr.class "footer" ]
         [ Html.div [ Attr.class "wrapper" ]
-            [ Html.a [ Attr.href "/" ] [ Html.text "Jack Murphy" ]
-            , Html.div []
+            [ Html.div []
                 [ Html.a [ Attr.href "/cv" ] [ Html.text "CV" ]
                 , Html.a [ Attr.href "/technical" ]
                     [ Html.p [] [ Html.text "Blog" ]
