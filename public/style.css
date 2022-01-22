@@ -1,0 +1,30 @@
+.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  padding: 0 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.header > a {
+  text-decoration: none;
+}
+
+.header > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.header > div > a {
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.header > div > a > p {
+  margin: 0px;
+}

@@ -11,7 +11,7 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
-import View exposing (View, header)
+import View exposing (View, globalPageLayout)
 
 
 type alias Model =
@@ -139,22 +139,22 @@ view maybeUrl sharedModel static =
 
 aboutPageView : Data -> List (Html Msg)
 aboutPageView content =
-    [ header
-    , Html.div []
-        [ Html.div [] [ Html.text content.tagLine ]
-        , Html.div [] [ Html.text content.description ]
-        , Html.div []
-            (List.map
-                projectLink
-                content.projects
-            )
-        , Html.div []
-            (List.map
-                projectLink
-                content.talks
-            )
+    globalPageLayout
+        [ Html.div [ Attr.class "wrapper" ]
+            [ Html.div [] [ Html.text content.tagLine ]
+            , Html.div [] [ Html.text content.description ]
+            , Html.div []
+                (List.map
+                    projectLink
+                    content.projects
+                )
+            , Html.div []
+                (List.map
+                    projectLink
+                    content.talks
+                )
+            ]
         ]
-    ]
 
 
 projectLink : Project -> Html msg

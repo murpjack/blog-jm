@@ -14,7 +14,7 @@ import Pages.Url
 import Shared
 import Types exposing (BlogPostMetadata)
 import Utils as U
-import View exposing (View, header)
+import View exposing (View, globalPageLayout)
 
 
 type alias Model =
@@ -99,11 +99,9 @@ view :
 view maybeUrl sharedModel static =
     { title = "Blog"
     , body =
-        [ Html.div []
-            [ header
-            , Html.div [] (List.map articleMeta static.data)
+        globalPageLayout
+            [ Html.div [ Attr.class "wrapper" ] (List.map articleMeta static.data)
             ]
-        ]
     }
 
 
