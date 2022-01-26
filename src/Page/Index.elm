@@ -154,8 +154,8 @@ aboutPageView content =
             , Html.p []
                 [ Html.text "I'm a web developer with "
                 , Html.strong [] [ Html.text "experience building " ]
-                , Html.i [] [ Html.text "attractive" ]
-                , Html.strong [] [ Html.text ", scalable web applications" ]
+                , Html.i [] [ Html.text "reliable," ]
+                , Html.strong [] [ Html.text " attractive web solutions" ]
                 , Html.span [] []
                 ]
             , Html.h2 [] [ Html.text "Development" ]
@@ -185,7 +185,25 @@ aboutPageView content =
 projectLink : Project -> Html msg
 projectLink p =
     if Utils.isValidUrl p.link then
-        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.title ]
+        Html.a
+            [ Attr.class "content__link"
+            , Attr.href p.link
+            , Attr.target "_blank"
+            ]
+            [ Html.text p.title ]
 
     else
-        Html.a [ Attr.href p.link ] [ Html.text p.title ]
+        Html.a
+            [ Attr.class "content__link"
+            , Attr.href p.link
+            ]
+            [ Html.text p.title ]
+
+
+link : String -> String -> Html msg
+link title url =
+    if Utils.isValidUrl url then
+        Html.a [ Attr.href url, Attr.target "_blank" ] [ Html.text title ]
+
+    else
+        Html.a [ Attr.href url ] [ Html.text title ]

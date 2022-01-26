@@ -54,7 +54,7 @@ body {
 .footer > .wrapper {
   padding: 0 10px;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
 }
 .footer > .wrapper > div {
@@ -64,13 +64,66 @@ body {
 }
 .footer > .wrapper > div > a {
   color: #222;
-  font-size: 14px;
-  font-family: sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
+  font-size: 15px;
   text-align: center;
   text-decoration: none;
   margin-right: 10px;
+}
+.footer > .wrapper > div > a em,
+.footer > .wrapper > div > a strong {
+  display: block;
+}
+.footer > .wrapper > div > a strong {
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.language__switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  /* Hide default HTML checkbox */
+}
+.language__switch > input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.language__switch > .languages {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.language__switch > .languages > span {
+  cursor: pointer;
+  font-size: 15px;
+  display: inline-block;
+  line-height: 0.75;
+}
+.language__switch > .languages > span:first-child {
+  position: relative;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.language__switch > .languages > span:first-child:before {
+  background-color: #222;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1px;
+  left: calc(100% + 5px);
+  width: 1px;
+  height: 100%;
+}
+.language__switch > input:checked + .languages > .en {
+  font-weight: unset;
+}
+.language__switch > input:checked + .languages > .cn {
+  font-weight: 700;
 }
 
 .content {
@@ -139,10 +192,39 @@ About - Home
   position: relative;
 }
 .about-page > p:first-of-type {
-  margin: 40px 0;
+  background-color: white;
+  display: inline-block;
+  letter-spacing: 1px;
+  line-height: 1.6;
+  padding-top: 40px;
+  padding-right: calc(60% + 40px);
+  padding-bottom: 140px;
+  padding-left: 40px;
+  position: relative;
+}
+.about-page > p:first-of-type:before {
+  background-color: cadetblue;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  bottom: 0;
+  left: 40%;
+  width: 60%;
+  height: calc(100% - 0px);
+}
+.about-page h2 {
+  margin-top: 40px;
+  padding-left: 40px;
 }
 .about-page h2 ~ p {
   margin: 5px 0 20px;
+  padding-left: 40px;
+}
+.about-page .content__link {
+  display: block;
+  padding-left: 40px;
+  margin-bottom: 30px;
 }
 
 /* 

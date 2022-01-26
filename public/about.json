@@ -9,7 +9,7 @@
     "talks": [{ "title": "talk1", "link": "https://elm-pages.com/" }]
   },
   "cn": {
-    "tagLine": "欢迎光临。",
+    "tagLine": "欢迎光临",
     "description": "我叫 Jack。",
     "projects": [
       { "title": "cn blog", "link": "/cn" },

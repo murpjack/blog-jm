@@ -2,7 +2,7 @@ $bg-primary: #f8f8f8;
 $bg-secondary: #9dd9d2;
 $coinbase-vivid: #1554f0;
 $off-white: #eee;
-// $dark-blue: #05668d;
+$dark-blue: #05668d;
 
 * {
   margin: 0;
@@ -229,11 +229,42 @@ About - Home
   }
 
   > p:first-of-type {
-    margin: 40px 0;
+    background-color: white;
+    display: inline-block;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    padding-top: 40px;
+    padding-right: calc(60% + 40px);
+    padding-bottom: 140px;
+    padding-left: 40px;
+    position: relative;
+
+    &:before {
+      background-color: cadetblue;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0px;
+      bottom: 0;
+      left: 40%;
+      width: 60%;
+      height: calc(100% - 0px);
+      // width: calc(40% - 0px);
+    }
   }
 
+  h2 {
+    margin-top: 40px;
+    padding-left: 40px;
+  }
   h2 ~ p {
     margin: 5px 0 20px;
+    padding-left: 40px;
+  }
+  .content__link {
+    display: block;
+    padding-left: 40px;
+    margin-bottom: 30px;
   }
 }
 
