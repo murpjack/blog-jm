@@ -71,7 +71,7 @@ markdownToView markdownString =
 globalPageLayout : List (Html msg) -> List (Html msg)
 globalPageLayout inside =
     [ header
-    , Html.div [ Attr.class "wrapper" ]
+    , Html.div [ Attr.class "wrapper", Attr.class "content" ]
         inside
     , footer
     ]
@@ -89,9 +89,6 @@ header =
                 [ Html.a [ Attr.href "/" ]
                     [ Html.text "ABOUT"
                     ]
-                , Html.a [ Attr.href "/cv" ]
-                    [ Html.text "CV"
-                    ]
                 , Html.a [ Attr.href "/technical" ]
                     [ Html.text "BLOG"
                     ]
@@ -104,14 +101,23 @@ footer : Html msg
 footer =
     Html.div [ Attr.class "footer" ]
         [ Html.div [ Attr.class "wrapper" ]
-            [ Html.p [] [ Html.text "Written in Elm." ]
-            , Html.div []
-                [ Html.a [ Attr.href "/cv" ]
-                    [ Html.text "CV"
+            [ Html.div []
+                [ Html.a [ Attr.href "/technical" ]
+                    [ Html.em [] [ Html.text "Browse my" ]
+                    , Html.strong [] [ Html.text "BLOG" ]
                     ]
-                , Html.a [ Attr.href "/technical" ]
-                    [ Html.text "BLOG"
+                , Html.a [ Attr.href "/" ]
+                    [ Html.em [] [ Html.text "Keep in" ]
+                    , Html.strong [] [ Html.text "CONTACT" ]
                     ]
                 ]
+            , Html.label [ Attr.class "language__switch" ]
+                [ Html.input [ Attr.type_ "checkbox" ] []
+                , Html.p [ Attr.class "languages" ]
+                    [ Html.span [ Attr.class "en" ] [ Html.text "EN" ]
+                    , Html.span [ Attr.class "cn" ] [ Html.text "CN" ]
+                    ]
+                ]
+            , Html.p [] [ Html.text "Elegantly written using Elm." ]
             ]
         ]
