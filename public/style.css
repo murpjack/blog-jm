@@ -29,7 +29,7 @@ body {
 .header > .wrapper > a {
   text-decoration: none;
   color: #222;
-  font-size: 16px;
+  font-size: 18px;
   font-family: sans-serif;
   font-weight: 600;
   margin: 0;
@@ -54,8 +54,8 @@ body {
 .footer > .wrapper {
   padding: 0 10px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: baseline;
+  justify-content: center;
 }
 .footer > .wrapper > div {
   display: flex;
@@ -73,19 +73,23 @@ body {
   margin-right: 10px;
 }
 
+.content {
+  padding: 10px;
+}
+
 /*
 About - Home
 */
-.about-page {
-  height: 350px;
+.about-page > .head {
+  align-items: center;
+  height: 250px;
   background-color: white;
-  margin: 10px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin: 0;
   position: relative;
 }
-.about-page:before {
+.about-page > .head:before {
   background-color: #9dd9d2;
   content: "";
   position: absolute;
@@ -95,7 +99,7 @@ About - Home
   height: 100%;
   width: 50%;
 }
-.about-page__inner > h1 {
+.about-page .head__inner > h1 {
   color: #222;
   display: inline-block;
   font-size: 50px;
@@ -104,7 +108,7 @@ About - Home
   margin: 0;
   position: relative;
 }
-.about-page__inner > span {
+.about-page .head__inner > span {
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -112,6 +116,33 @@ About - Home
   display: inline-block;
   margin-left: 10px;
   margin-bottom: -1px;
+}
+.about-page > p {
+  font-size: 18px;
+}
+.about-page > p > span {
+  height: 0.25em;
+  width: 0.25em;
+  border-radius: 50%;
+  background-color: #9dd9d2;
+  display: inline-block;
+  margin-left: 0.15em;
+  margin-bottom: -1px;
+}
+.about-page > h2 {
+  color: #222;
+  display: inline-block;
+  font-size: 30px;
+  font-weight: 800;
+  font-family: sans-serif;
+  margin: 0;
+  position: relative;
+}
+.about-page > p:first-of-type {
+  margin: 40px 0;
+}
+.about-page h2 ~ p {
+  margin: 5px 0 20px;
 }
 
 /* 

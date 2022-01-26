@@ -11,6 +11,7 @@ import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
 import Shared
+import Utils
 import View exposing (View, globalPageLayout)
 
 
@@ -76,11 +77,10 @@ getLanguageAbr l =
 
 projectDecoder : Decoder Project
 projectDecoder =
-    Decode.map3
+    Decode.map2
         Project
         (Decode.field "title" Decode.string)
         (Decode.field "link" Decode.string)
-        (Decode.field "sameSite" Decode.bool)
 
 
 head :
@@ -118,7 +118,7 @@ type alias AboutPageContent =
 
 
 type alias Project =
-    { title : String, link : String, sameSite : Bool }
+    { title : String, link : String }
 
 
 view :
@@ -141,31 +141,51 @@ aboutPageView : Data -> List (Html Msg)
 aboutPageView content =
     globalPageLayout
         [ Html.div [ Attr.class "about-page" ]
-            [ Html.div [ Attr.class "about-page__inner" ]
-                [ Html.h1 []
-                    [ Html.text content.tagLine
+            [ Html.div
+                [ Attr.class "head"
+                ]
+                [ Html.div [ Attr.class "head__inner" ]
+                    [ Html.h1 []
+                        [ Html.text content.tagLine
+                        ]
+                    , Html.span [] []
                     ]
+                ]
+            , Html.p []
+                [ Html.text "I'm a web developer with "
+                , Html.strong [] [ Html.text "experience building " ]
+                , Html.i [] [ Html.text "attractive" ]
+                , Html.strong [] [ Html.text ", scalable web applications" ]
                 , Html.span [] []
                 ]
+            , Html.h2 [] [ Html.text "Development" ]
+            , Html.p []
+                [ Html.text "How I spend some of my time"
+                , Html.span [] []
+                ]
+            , Html.div []
+                (List.map
+                    projectLink
+                    content.projects
+                )
+            , Html.h2 [] [ Html.text "Talks" ]
+            , Html.p []
+                [ Html.text "Not exclusively about technical topics"
+                , Html.span [] []
+                ]
+            , Html.div []
+                (List.map
+                    projectLink
+                    content.talks
+                )
             ]
-        , Html.div [] [ Html.text content.description ]
-        , Html.div []
-            (List.map
-                projectLink
-                content.projects
-            )
-        , Html.div []
-            (List.map
-                projectLink
-                content.talks
-            )
         ]
 
 
 projectLink : Project -> Html msg
 projectLink p =
-    if p.sameSite then
-        Html.a [ Attr.href p.link ] [ Html.text p.title ]
+    if Utils.isValidUrl p.link then
+        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.title ]
 
     else
-        Html.a [ Attr.href p.link, Attr.target "_blank" ] [ Html.text p.title ]
+        Html.a [ Attr.href p.link ] [ Html.text p.title ]

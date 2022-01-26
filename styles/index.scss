@@ -37,7 +37,7 @@ body {
     > a {
       text-decoration: none;
       color: #222;
-      font-size: 16px;
+      font-size: 18px;
       font-family: sans-serif;
       font-weight: 600;
       margin: 0;
@@ -68,8 +68,8 @@ body {
   > .wrapper {
     padding: 0 10px;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
+    align-items: baseline;
+    justify-content: center;
 
     > div {
       display: flex;
@@ -91,30 +91,35 @@ body {
   }
 }
 
+.content {
+  padding: 10px;
+}
+
 /*
 About - Home
 */
 .about-page {
-  height: 350px;
-  background-color: white;
-  margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+  > .head {
+    align-items: center;
+    height: 250px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    position: relative;
 
-  &:before {
-    background-color: $bg-secondary;
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 50%;
+    &:before {
+      background-color: $bg-secondary;
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      height: 100%;
+      width: 50%;
+    }
   }
-
-  &__inner {
+  .head__inner {
     > h1 {
       color: #222;
       display: inline-block;
@@ -134,6 +139,38 @@ About - Home
       margin-left: 10px;
       margin-bottom: -1px;
     }
+  }
+
+  > p {
+    font-size: 18px;
+
+    > span {
+      height: 0.25em;
+      width: 0.25em;
+      border-radius: 50%;
+      background-color: $bg-secondary;
+      display: inline-block;
+      margin-left: 0.15em;
+      margin-bottom: -1px;
+    }
+  }
+
+  > h2 {
+    color: #222;
+    display: inline-block;
+    font-size: 30px;
+    font-weight: 800;
+    font-family: sans-serif;
+    margin: 0;
+    position: relative;
+  }
+
+  > p:first-of-type {
+    margin: 40px 0;
+  }
+
+  h2 ~ p {
+    margin: 5px 0 20px;
   }
 }
 
