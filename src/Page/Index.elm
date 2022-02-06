@@ -146,64 +146,67 @@ aboutPageView content =
                 ]
                 [ Html.div [ Attr.class "head__inner" ]
                     [ Html.h1 []
-                        [ Html.text content.tagLine
+                        [ Html.text "WEL"
+                        , Html.br [] []
+                        , Html.text "COME"
+                        , Html.span [] []
                         ]
+                    ]
+                ]
+            , Html.div [ Attr.class "description" ]
+                [ Html.div []
+                    [ Html.img [ Attr.class "zigzag", Attr.src "./zigzag.png" ] []
+                    , Html.p []
+                        [ Html.text "Welcome to my corner of the web. "
+                        , Html.text "My name is Jack Murphy and this site contains my projects, "
+                        , Html.text "and blog posts on all manner of topics, how-tos and software best-practices."
+                        , Html.br [] []
+                        , Html.br [] []
+                        ]
+                    , Html.p []
+                        [ Html.text "I'm a web developer with "
+                        , Html.strong [] [ Html.text "experience building reliable, " ]
+                        , Html.i [] [ Html.text "attractive" ]
+                        , Html.strong [] [ Html.text " web solutions" ]
+                        , Html.span [] []
+                        ]
+                    ]
+                ]
+            , Html.div
+                [ Attr.class "subheader" ]
+                [ Html.img [ Attr.class "zigzag", Attr.src "./zigzag.png" ] []
+                , Html.h2 []
+                    [ Html.text "Development"
+                    ]
+                , Html.p []
+                    [ Html.text "Here are a few varied projects, on which I have worked"
                     , Html.span [] []
                     ]
                 ]
-            , Html.p []
-                [ Html.text "I'm a web developer with "
-                , Html.strong [] [ Html.text "experience building " ]
-                , Html.i [] [ Html.text "reliable," ]
-                , Html.strong [] [ Html.text " attractive web solutions" ]
-                , Html.span [] []
-                ]
-            , Html.h2 [] [ Html.text "Development" ]
-            , Html.p []
-                [ Html.text "How I spend some of my time"
-                , Html.span [] []
-                ]
             , Html.div []
-                (List.map
-                    projectLink
-                    content.projects
-                )
-            , Html.h2 [] [ Html.text "Talks" ]
-            , Html.p []
-                [ Html.text "Not exclusively about technical topics"
-                , Html.span [] []
+                [ Html.div [ Attr.class "project__link" ]
+                    [ projectLink { title = "Project1", link = "https://elm-pages.com/" }, Html.p [] [ Html.text "This is a description" ] ]
+                , Html.div [ Attr.class "project__link" ]
+                    [ projectLink { title = "Project2", link = "https://elm-pages.com/" }, Html.p [] [ Html.text "This is a description" ] ]
+                , Html.div [ Attr.class "project__link" ]
+                    [ projectLink { title = "The start of the Silk Roads", link = "https://elm-pages.com/" }, Html.p [] [ Html.text "This is a description" ] ]
                 ]
-            , Html.div []
-                (List.map
-                    projectLink
-                    content.talks
-                )
             ]
         ]
 
 
 projectLink : Project -> Html msg
 projectLink p =
-    if Utils.isValidUrl p.link then
-        Html.a
-            [ Attr.class "content__link"
-            , Attr.href p.link
-            , Attr.target "_blank"
-            ]
-            [ Html.text p.title ]
+    let
+        newPageOnClick =
+            if Utils.isValidUrl p.link then
+                [ Attr.target "_blank" ]
 
-    else
-        Html.a
-            [ Attr.class "content__link"
-            , Attr.href p.link
-            ]
-            [ Html.text p.title ]
-
-
-link : String -> String -> Html msg
-link title url =
-    if Utils.isValidUrl url then
-        Html.a [ Attr.href url, Attr.target "_blank" ] [ Html.text title ]
-
-    else
-        Html.a [ Attr.href url ] [ Html.text title ]
+            else
+                []
+    in
+    Html.a
+        (Attr.href p.link
+            :: newPageOnClick
+        )
+        [ Html.text p.title ]
