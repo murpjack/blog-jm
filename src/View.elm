@@ -24,7 +24,6 @@ map fn doc =
 placeholder : BlogPostMetadata -> View msg
 placeholder blogPost =
     let
-        -- TODO: Refactor and abstract 'postBody -> renderedMarkdown' out of 'placeholder'.
         postBody =
             case
                 blogPost.body
@@ -35,19 +34,15 @@ placeholder blogPost =
 
                 Err error ->
                     Html.div [] [ Html.text error ]
-
-        -- |> Decode.fromResult
     in
-    { title = blogPost.title
+    { title = blogPost.title ++ " | Jack Murphy"
     , body =
         globalPageLayout
-            -- TODO: Remove this link to '/blog' once the header includes one.
-            [ Html.h2 [] [ Html.text blogPost.title ]
-            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
-            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div []
-                [ Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
-                , postBody
+            [ Html.div [ Attr.class "post" ]
+                [ Html.p [] [ Html.text ("Posted on " ++ U.formatIsoString blogPost.publishDate) ]
+                , Html.h2 [] [ Html.text blogPost.title ]
+                , Html.p [] [ Html.text ("You will read this in " ++ U.timeToRead blogPost.body ++ ".") ]
+                , Html.div [] [ postBody ]
                 ]
             ]
     }
@@ -71,52 +66,15 @@ markdownToView markdownString =
 globalPageLayout : List (Html msg) -> List (Html msg)
 globalPageLayout inside =
     [ header
-    , Html.div [ Attr.class "wrapper", Attr.class "content" ]
+    , Html.div [ Attr.class "wrapper" ]
         inside
-    , footer
     ]
 
 
 header : Html msg
 header =
     Html.div
-        [ Attr.class "header"
-        ]
-        [ Html.div [ Attr.class "wrapper" ]
-            [ Html.a [ Attr.href "/" ] [ Html.text "JACK MURPHY" ]
-            , Html.div []
-                [ Html.a [ Attr.href "/" ]
-                    [ Html.text "ABOUT"
-                    ]
-                , Html.a [ Attr.href "/technical" ]
-                    [ Html.text "BLOG"
-                    ]
-                ]
-            ]
-        ]
-
-
-footer : Html msg
-footer =
-    Html.div [ Attr.class "footer" ]
-        [ Html.div [ Attr.class "wrapper" ]
-            [ Html.div []
-                [ Html.a [ Attr.href "/technical" ]
-                    [ Html.em [] [ Html.text "Browse my" ]
-                    , Html.strong [] [ Html.text "BLOG" ]
-                    ]
-                , Html.a [ Attr.href "/" ]
-                    [ Html.em [] [ Html.text "Keep in" ]
-                    , Html.strong [] [ Html.text "CONTACT" ]
-                    ]
-                , Html.label [ Attr.class "language__switch" ]
-                    [ Html.input [ Attr.type_ "checkbox" ] []
-                    , Html.p [ Attr.class "languages" ]
-                        [ Html.span [ Attr.class "en" ] [ Html.text "EN" ]
-                        , Html.span [ Attr.class "cn" ] [ Html.text "CN" ]
-                        ]
-                    ]
-                ]
-            , Html.p [] [ Html.text "Elegantly written using Elm." ]
-            ]
+        [ Attr.class "header" ]
+        [ Html.a [ Attr.href "/" ] [ Html.text "Jack Murphy" ]
+        , Html.a [ Attr.href "/blog" ] [ Html.text "Blog" ]
         ]

@@ -1,4 +1,4 @@
-module Page.Technical exposing (Data, Model, Msg, page, view)
+module Page.Blog exposing (Data, Model, Msg, page, view)
 
 import DataSource exposing (DataSource)
 import DataSource.File as File
@@ -64,29 +64,30 @@ blogPostsFiles =
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
 blogPostDecoder renderedMarkdown =
-    Decode.map4 (BlogPostMetadata renderedMarkdown)
+    Decode.map5 (BlogPostMetadata renderedMarkdown)
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
         (Decode.field "publishDate" Decode.string)
+        (Decode.field "description" Decode.string)
 
 
 head :
     StaticPayload Data RouteParams
     -> List Head.Tag
-head static =
+head _ =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "elm-pages"
+        , siteName = "Jack Murphy"
         , image =
-            { url = Pages.Url.external "TODO"
-            , alt = "elm-pages logo"
+            { url = Pages.Url.external ""
+            , alt = "Jack Murphy blog site logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "TODO"
+        , description = "Welcome. My name is Jack Murphy and this is my blog, where I document what I'm learning and write about technical topics."
         , locale = Nothing
-        , title = "TODO title" -- metadata.title -- TODO
+        , title = "Blog | Jack Murphy"
         }
         |> Seo.website
 
@@ -97,22 +98,19 @@ view :
     -> StaticPayload Data RouteParams
     -> View Msg
 view maybeUrl sharedModel static =
-    { title = "Blog"
+    { title = "Blog | Jack Murphy"
     , body =
         globalPageLayout
-            (List.map articleMeta static.data)
+            [ Html.div [ Attr.class "blog__list" ] (List.map articleMeta static.data) ]
     }
 
 
 articleMeta : BlogPostMetadata -> Html msg
 articleMeta blogPost =
     Html.div []
-        [ Html.div []
-            [ Html.a [ Attr.href ("/technical/" ++ blogPost.slug) ]
-                [ Html.text blogPost.title
-                ]
-            , Html.div [] [ Html.text (" Tags: " ++ String.join " " blogPost.tags) ]
-            , Html.div [] [ Html.text ("Date published: " ++ U.formatIsoString blogPost.publishDate) ]
-            , Html.div [] [ Html.text ("Read time: " ++ U.timeToRead blogPost.body) ]
+        [ Html.p [] [ Html.text ("Posted on " ++ U.formatIsoString blogPost.publishDate) ]
+        , Html.a [ Attr.href ("/blog/" ++ blogPost.slug) ]
+            [ Html.h2 [] [ Html.text blogPost.title ]
             ]
+        , Html.p [] [ Html.text blogPost.description ]
         ]

@@ -7,6 +7,7 @@ type alias BlogPostMetadata =
     , title : String
     , tags : List String
     , publishDate : IsoString
+    , description : String
     }
 
 

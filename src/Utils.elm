@@ -9,7 +9,7 @@ formatIsoString : IsoString -> String
 formatIsoString str =
     case Date.fromIsoString str of
         Ok date ->
-            Date.format "EEEE, d MMMM y" date
+            Date.format "ddd MMMM y" date
 
         Err _ ->
             "-"

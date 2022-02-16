@@ -1,4 +1,4 @@
-module Page.Technical.Slug_ exposing (Data, Model, Msg, page)
+module Page.Blog.Slug_ exposing (Data, Model, Msg, page)
 
 import DataSource exposing (DataSource)
 import DataSource.File as File
@@ -53,11 +53,12 @@ data routeParams =
 
 blogPostDecoder : String -> Decoder BlogPostMetadata
 blogPostDecoder renderedMarkdown =
-    Decode.map4 (BlogPostMetadata renderedMarkdown)
+    Decode.map5 (BlogPostMetadata renderedMarkdown)
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
         (Decode.field "publishDate" Decode.string)
+        (Decode.field "description" Decode.string)
 
 
 head :
@@ -66,16 +67,16 @@ head :
 head static =
     Seo.summary
         { canonicalUrlOverride = Nothing
-        , siteName = "JM blog"
+        , siteName = "Jack Murphy"
         , image =
-            { url = Pages.Url.external "TODO"
-            , alt = "elm-pages logo"
+            { url = Pages.Url.external ""
+            , alt = "Jack Murphy blog site logo"
             , dimensions = Nothing
             , mimeType = Nothing
             }
-        , description = "TODO"
+        , description = static.data.description
         , locale = Nothing
-        , title = static.data.title ++ " | JM blog"
+        , title = static.data.title ++ " | Jack Murphy"
         }
         |> Seo.website
 
