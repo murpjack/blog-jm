@@ -11,6 +11,7 @@ import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
+import QueryParams exposing (QueryParams)
 import Shared
 import Types exposing (BlogPostMetadata)
 import Utils as U
@@ -56,7 +57,7 @@ blogPostsFiles : DataSource (List String)
 blogPostsFiles =
     Glob.succeed identity
         |> Glob.captureFilePath
-        |> Glob.match (Glob.literal "content/technical/")
+        |> Glob.match (Glob.literal "content/")
         |> Glob.match Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
@@ -101,7 +102,8 @@ view maybeUrl sharedModel static =
     { title = "Blog | Jack Murphy"
     , body =
         globalPageLayout
-            [ Html.div [ Attr.class "blog__list" ] (List.map articleMeta static.data) ]
+            [ Html.div [ Attr.class "blog__list" ] (List.map articleMeta static.data)
+            ]
     }
 
 
