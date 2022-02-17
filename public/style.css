@@ -12,7 +12,7 @@
 }
 body {
   color: #333;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "Lato", "Arial";
 }
 
@@ -33,17 +33,13 @@ h4 {
 }
 
 h2 {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 a {
   font-family: "Lato-bold", "Arial";
   position: relative;
   display: inline-block;
-}
-
-li {
-  margin-left: 1.25rem;
 }
 
 .wrapper {
@@ -80,14 +76,14 @@ span.big-dot {
 .header > a:first-of-type {
   color: white;
   display: block;
-  font-size: 4.25rem;
+  font-size: 4rem;
   letter-spacing: 5px;
   margin-bottom: 20px;
   text-decoration: none;
 }
 
 .blog__list > div {
-  min-height: 150px;
+  min-height: 125px;
   padding: 5px 0px;
   margin-bottom: 30px;
 }
@@ -120,7 +116,18 @@ span.big-dot {
 }
 
 .post {
-  padding: 5px 0px;
+  padding: 5px 0px 80px;
+}
+.post h3,
+.post h4 {
+  margin: 30px 0 5px;
+}
+.post ul {
+  margin: 1.25rem 0;
+}
+.post li {
+  margin-bottom: 1rem;
+  margin-left: 1.25rem;
 }
 .post > p:first-of-type {
   color: #005f73;
@@ -132,7 +139,7 @@ span.big-dot {
   background-color: #9dd9d2;
   display: inline-block;
   font-size: 1rem;
-  margin-bottom: 15px;
+  margin-bottom: 50px;
   padding: 10px;
   padding-right: 20px;
 }

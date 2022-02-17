@@ -39,7 +39,7 @@ page =
 routes : DataSource (List RouteParams)
 routes =
     Glob.succeed RouteParams
-        |> Glob.match (Glob.literal "content/technical/")
+        |> Glob.match (Glob.literal "content/")
         |> Glob.capture Glob.wildcard
         |> Glob.match (Glob.literal ".md")
         |> Glob.toDataSource
@@ -48,7 +48,7 @@ routes =
 data : RouteParams -> DataSource Data
 data routeParams =
     File.bodyWithFrontmatter blogPostDecoder
-        ("content/technical/" ++ routeParams.slug ++ ".md")
+        ("content/" ++ routeParams.slug ++ ".md")
 
 
 blogPostDecoder : String -> Decoder BlogPostMetadata

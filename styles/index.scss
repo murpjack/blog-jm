@@ -22,7 +22,7 @@ $blue-sapphire: #005f73;
 
 body {
   color: #333;
-  font-size: 18px;
+  font-size: 16px;
   font-family: $font-sans;
 }
 
@@ -43,17 +43,13 @@ h4 {
 }
 
 h2 {
-  font-size: 2.25rem;
+  font-size: 2rem;
 }
 
 a {
   font-family: $font-sans-bold;
   position: relative;
   display: inline-block;
-}
-
-li {
-  margin-left: 1.25rem;
 }
 
 .wrapper {
@@ -91,7 +87,7 @@ span.big-dot {
     &:first-of-type {
       color: white;
       display: block;
-      font-size: 4.25rem;
+      font-size: 4rem;
       letter-spacing: 5px;
       margin-bottom: 20px;
       text-decoration: none;
@@ -101,7 +97,7 @@ span.big-dot {
 
 .blog__list {
   > div {
-    min-height: 150px;
+    min-height: 125px;
     padding: 5px 0px;
     margin-bottom: 30px;
 
@@ -141,7 +137,21 @@ span.big-dot {
 }
 
 .post {
-  padding: 5px 0px;
+  padding: 5px 0px 80px;
+
+  h3,
+  h4 {
+    margin: 30px 0 5px;
+  }
+
+  ul {
+    margin: 1.25rem 0;
+  }
+
+  li {
+    margin-bottom: 1rem;
+    margin-left: 1.25rem;
+  }
 
   > p {
     &:first-of-type {
@@ -154,7 +164,7 @@ span.big-dot {
       background-color: $bg-secondary;
       display: inline-block;
       font-size: 1rem;
-      margin-bottom: 15px;
+      margin-bottom: 50px;
       padding: 10px;
       padding-right: 20px;
     }
