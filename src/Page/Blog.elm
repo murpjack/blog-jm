@@ -11,7 +11,6 @@ import OptimizedDecoder as Decode exposing (Decoder)
 import Page exposing (Page, StaticPayload)
 import Pages.PageUrl exposing (PageUrl)
 import Pages.Url
-import QueryParams exposing (QueryParams)
 import Shared
 import Types exposing (BlogPostMetadata)
 import Utils as U

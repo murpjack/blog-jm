@@ -143,6 +143,9 @@ span.big-dot {
   padding: 10px;
   padding-right: 20px;
 }
+.post > div p {
+  margin: revert;
+}
 
 .about {
   padding: 5px 0px;

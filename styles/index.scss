@@ -169,6 +169,11 @@ span.big-dot {
       padding-right: 20px;
     }
   }
+  > div {
+    p {
+      margin: revert;
+    }
+  }
 }
 
 .about {
