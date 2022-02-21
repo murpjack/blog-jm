@@ -129,6 +129,18 @@ span.big-dot {
   margin-bottom: 1rem;
   margin-left: 1.25rem;
 }
+.post pre {
+  padding: 40px 20px;
+  border-radius: 3px;
+  line-height: 1.6;
+  overflow: auto;
+  display: block;
+  background-color: rgba(157, 217, 210, 0.4);
+  border: 1px solid #005f7333;
+}
+.post pre > code {
+  color: #333;
+}
 .post > p:first-of-type {
   color: #005f73;
   font-size: 1rem;

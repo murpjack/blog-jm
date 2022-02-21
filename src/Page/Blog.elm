@@ -101,7 +101,12 @@ view maybeUrl sharedModel static =
     { title = "Blog | Jack Murphy"
     , body =
         globalPageLayout
-            [ Html.div [ Attr.class "blog__list" ] (List.map articleMeta static.data)
+            [ Html.div [ Attr.class "blog__list" ]
+                (static.data
+                    |> List.sortBy .publishDate
+                    |> List.reverse
+                    |> List.map articleMeta
+                )
             ]
     }
 

@@ -20,8 +20,9 @@ You can find test cases for basic methods and ideas with a cursory search and ad
 This article is just a few ways to edit styles/ select elements in the DOM using javascript and css. In no particular order here are some ideas:
 
 1.  **Use CSS selectors to style elements**  
-     Dynamically styling the odd DOM element is unavoidable. For these occasions updating we can add/remove classes and use nested or relative css selectors to control any changes.  
-     **JS**
+     Dynamically styling the odd DOM element is unavoidable. For these occasions updating we can add/remove classes and use nested or relative css selectors to control any changes.
+
+    **JS**
 
     ```js
     let container = document.getElementsByClassName('container')[0];

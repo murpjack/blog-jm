@@ -18,6 +18,7 @@ $font-serif: 'Source-Serif', 'Times New Roman';
 
 $bg-primary: #f8f8f8;
 $bg-secondary: #9dd9d2;
+$bg-secondary--faded: rgba(157, 217, 210, 0.4);
 $blue-sapphire: #005f73;
 
 body {
@@ -153,6 +154,19 @@ span.big-dot {
     margin-left: 1.25rem;
   }
 
+  pre {
+    padding: 40px 20px;
+    border-radius: 3px;
+    line-height: 1.6;
+    overflow: auto;
+    display: block;
+    background-color: $bg-secondary--faded;
+    border: 1px solid #005f7333;
+
+    > code {
+      color: #333;
+    }
+  }
   > p {
     &:first-of-type {
       color: $blue-sapphire;
@@ -169,6 +183,7 @@ span.big-dot {
       padding-right: 20px;
     }
   }
+
   > div {
     p {
       margin: revert;
